@@ -1,0 +1,13 @@
+{
+    "name": "crocodicstudio/dokularavel",
+    "description": "This package is DOKU Payment Gateway Library for Laravel",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+          "crocodicstudio\\dokularavel\\": "src/"
+        }
+      },
+    "require": {}
+}
