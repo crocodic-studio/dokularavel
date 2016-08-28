@@ -2,20 +2,14 @@
 
 namespace crocodicstudio\dokularavel\Controllers;
 
-use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Auth\Access\AuthorizesResources;
 
 error_reporting(E_ALL ^ E_NOTICE);
 
 use Cache;
 
 class Controller extends BaseController
-{
-    use AuthorizesRequests, AuthorizesResources, DispatchesJobs, ValidatesRequests;
-
+{    
 
     //API DOKU ENDPOINT
 	var $prePaymentUrl      = 'http://staging.doku.com/api/payment/PrePayment';
