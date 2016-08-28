@@ -15,10 +15,10 @@ class DokuLaravelServiceProvider extends ServiceProvider
     public function boot()
     {        
         $this->publishes([  __DIR__.'/Config/dokularavel.php' => config_path('dokularavel.php')],'dokularavel_config');
+        $this->publishes([  __DIR__.'/Controllers/DokuLaravelHookController.php' => base_path('App/Http/Controllers/DokuLaravelHookController.php')],'dokularavel_hook');
         $this->publishes([  __DIR__.'/Assets' => public_path('vendor/dokularavel')],'dokularavel_assets');
         $this->loadViewsFrom(__DIR__.'/Views', 'dokularavel');
-        
-        require __DIR__.'/Helpers/Helper.php';
+                
         require __DIR__.'/routes.php';        
         
     }
