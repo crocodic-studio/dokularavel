@@ -13,20 +13,6 @@ return [
 	'MALL_ID'      => NULL,
 	'CURRENCY'	   => 360,
 
-	/*
-	| ---------------------------------------------------------
-	| DOKU PAYMENT AVAILABLE CHANNEL 
-	| ---------------------------------------------------------
-	| 15 = Credit Card
-	| 04 = Doku Wallet
-	| 02 = Mandiri Clickpay
-	| 14 = ALFA
-	|
-	| This setting is for default payment channel otherwise you can set the payment channel on the fly by url parameter "payment_channel"
-	*/	
-	'DEFAULT_PAYMENT_CHANNEL'=> 15, 		
-
-
 	/* 
 	| ---------------------------------------------------------
 	| Define your table of order and the fields
@@ -40,6 +26,22 @@ return [
 	'TABLE_FIELD_CUSTOMER_PHONE'   => NULL,
 	'TABLE_FIELD_CUSTOMER_EMAIL'   => NULL,
 	'TABLE_FIELD_CUSTOMER_ADDRESS' => NULL,
+
+
+	/*
+	| ---------------------------------------------------------
+	| DOKU PAYMENT AVAILABLE CHANNEL 
+	| ---------------------------------------------------------
+	| 15 = Credit Card
+	| 04 = Doku Wallet
+	| 02 = Mandiri Clickpay
+	| 05 = Permata VA Lite	
+	| 14 = ALFA
+	|
+	| This setting is for default payment channel otherwise you can set the payment channel on the fly by url parameter "payment_channel"
+	*/	
+	'AVAILABLE_PAYMENT_CHANNEL'=> ['15','04','02','05','14'],
+	'DEFAULT_PAYMENT_CHANNEL'=> '15', 			
 
 
 	/* 

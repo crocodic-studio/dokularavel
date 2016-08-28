@@ -33,7 +33,7 @@ class Controller extends BaseController
 
 		$responseJson = curl_exec( $ch );
 
-		Cache::put('doPrePaymentRaw',$responseJson, 60);
+		Cache::put('doPrePaymentRaw',date('Y-m-d H:i:s').'--'.$responseJson, 3);
 
 		curl_close($ch);
 
@@ -53,7 +53,7 @@ class Controller extends BaseController
 
 		$responseJson = curl_exec( $ch );
 
-		Cache::put('doPaymentRaw',$responseJson, 60);
+		Cache::put('doPaymentRaw',date('Y-m-d H:i:s').'--'.$responseJson, 3);
 
 		curl_close($ch);		
 
@@ -76,7 +76,7 @@ class Controller extends BaseController
 
 		$responseJson = curl_exec( $ch );
 
-		Cache::put('doDirectPayment',$responseJson, 60);
+		Cache::put('doDirectPaymentRaw',date('Y-m-d H:i:s').'--'.$responseJson, 3);
 
 		curl_close($ch);
 
@@ -99,7 +99,7 @@ class Controller extends BaseController
 
 		$responseJson = curl_exec( $ch );
 
-		Cache::put('doGeneratePaycodeRaw',$responseJson, 60);
+		Cache::put('doGeneratePaycodeRaw',date('Y-m-d H:i:s').'--'.$responseJson, 3);
 
 		curl_close($ch);
 
@@ -122,7 +122,7 @@ class Controller extends BaseController
 
 		$responseJson = curl_exec( $ch );
 
-		Cache::put('doRedirectPayment',$responseJson, 60);
+		Cache::put('doRedirectPayment',date('Y-m-d H:i:s').'--'.$responseJson, 3);
 
 		curl_close($ch);
 
@@ -145,7 +145,7 @@ class Controller extends BaseController
 
 		$responseJson = curl_exec( $ch );
 
-		Cache::put('doCapture',$responseJson, 60);
+		Cache::put('doCapture',date('Y-m-d H:i:s').'--'.$responseJson, 3);
 
 		curl_close($ch);
 
@@ -175,7 +175,7 @@ class Controller extends BaseController
 
 		$responseXML = curl_exec( $ch );
 
-		Cache::put('doPostCURL',$responseXML, 60);
+		Cache::put('doPostCURL',date('Y-m-d H:i:s').'--'.$responseXML, 3);
 
 		curl_close($ch);
 

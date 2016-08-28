@@ -27,7 +27,7 @@ class DokuController extends Controller {
 	var $customer_phone;
 	var $customer_email;
 	var $customer_address;
-	var $payment_available   = array('15','04','02','14');
+	var $payment_available = array();
 	var $session_dokularavel = array();
 	var $product_name_format;
 	var $show_doku_success_page;
@@ -52,6 +52,7 @@ class DokuController extends Controller {
 		$this->show_doku_success_page 		= config('dokularavel.SHOW_DOKU_SUCCESS_PAGE');
 		$this->show_finish_page 			= config('dokularavel.SHOW_FINISH_PAGE');
 		$this->your_own_finish_page 		= config('dokularavel.YOUR_OWN_FINISH_PAGE');
+		$this->payment_available 			= config('dokularavel.AVAILABLE_PAYMENT_CHANNEL');
 
 		if($this->show_finish_page) {
 			if($this->your_own_finish_page) {
@@ -91,7 +92,7 @@ class DokuController extends Controller {
 					'trans_id'         =>Request::get('trans_id'),
 					'payment_channel'  =>$this->payment_channel,
 					'amount'           =>preg_replace('/\D/', '', $query->{$this->table_field_amount}),
-					'customer_name'    =>preg_replace('/[^a-zA-Z]+/', '', $query->{$this->table_field_customer_name}),
+					'customer_name'    =>preg_replace('/[^a-zA-Z ]+/', '', $query->{$this->table_field_customer_name}),
 					'customer_phone'   =>str_limit(preg_replace('/\D/', '', $query->{$this->table_field_customer_phone}), 12, ''),
 					'customer_email'   =>$query->{$this->table_field_customer_email},
 					'customer_address' =>$query->{$this->table_field_customer_address}
@@ -164,7 +165,11 @@ class DokuController extends Controller {
 		$hook = new \App\Http\Controllers\DokuLaravelHookController;
 		$hook->beforePayment($data);		
 		
-		return view('dokularavel::payment_form',$data);
+		if($this->payment_channel == '02') {
+			return view('dokularavel::payment_form_mandiri_clickpay',$data);
+		}else{
+			return view('dokularavel::payment_form',$data);
+		}		
 	}
 
 	public function pay() {		
@@ -174,17 +179,18 @@ class DokuController extends Controller {
 
 		$token            = Request::get('doku_token');
 		$pairing_code     = Request::get('doku_pairing_code');
-		$invoice_no       = Request::get('doku_invoice_no');
-		$amount           = Request::get('doku_amount');
-		$currency         = Request::get('doku_currency');	
-		$chain 			  = Request::get('doku_chain_merchant');		
+		$invoice_no       = Request::get('doku_invoice_no')?:$this->invoice_no;
+		$amount           = Request::get('doku_amount')?:$this->amount;
+		$currency         = Request::get('doku_currency')?:$this->currency;	
+		$chain 			  = Request::get('doku_chain_merchant')?:'NA';		
 		
 		$customer_name    = $this->customer_name;
 		$customer_phone   = $this->customer_phone;
 		$customer_email   = $this->customer_email;
 		$customer_address = $this->customer_address;	
 
-		if(!$token || !$pairing_code || !$invoice_no || !$amount || !$currency || !$chain || !$customer_name || !$customer_phone || !$customer_email || !$customer_address) {
+
+		if(!$amount || !$currency || !$invoice_no || !$customer_name || !$customer_phone || !$customer_email || !$customer_address) {
 			$param                     = Request::all();
 			$param['customer_name']    = $customer_name;
 			$param['customer_phone']   = $customer_phone;
@@ -198,10 +204,20 @@ class DokuController extends Controller {
 		$params = array(
 			'amount'       => $amount,
 			'invoice'      => $invoice_no,
-			'currency'     => $currency,
-			'pairing_code' => $pairing_code,
-			'token'        => $token
+			'currency'     => $currency
 		);
+
+		if($pairing_code) {
+			$params['pairing_code'] = $pairing_code;
+		}
+
+		if($token) {
+			$params['token'] = $token;
+		}
+
+		if($this->payment_channel == '02') {
+			unset($params['currency']);
+		}
 		
 		$words    = $this->doCreateWords($params);
 		$wordsRaw = $this->doCreateWordsRaw($params);
@@ -218,15 +234,7 @@ class DokuController extends Controller {
 			'data_phone'   => $customer_phone,
 			'data_email'   => $customer_email,
 			'data_address' => $customer_address
-		);
-
-		$data = array(
-			'req_token_id'     => $token,
-			'req_pairing_code' => $pairing_code,
-			'req_customer'     => $customer,
-			'req_basket'       => $basket,
-			'req_words'        => $words
-		);
+		);		
 
 		$ymdis = date('YmdHis');
 		$dataPayment = array(
@@ -250,8 +258,18 @@ class DokuController extends Controller {
 			'req_address' 			=> $customer_address			
 		);
 
+		Cache::put('dataPayment',$dataPayment,25);
+
 
 		if($this->payment_channel == '15') { //If Payment Credit Card		
+
+			$data = array(
+				'req_token_id'     => $token,
+				'req_pairing_code' => $pairing_code,
+				'req_customer'     => $customer,
+				'req_basket'       => $basket,
+				'req_words'        => $words
+			);
 
 			$responsePrePayment = $this->doPrePayment($data);			
 
@@ -310,29 +328,33 @@ class DokuController extends Controller {
 			}
 
 
-		}elseif ($this->payment_channel == '02') { //If payment mandiri clickpay
+		}elseif ($this->payment_channel == '02') { //If payment mandiri clickpay			
+
 			$dataPayment['req_card_number']      = str_replace(" - ", "", Request::get('cc_number'));
 			$dataPayment['req_challenge_code_1'] = Request::get('CHALLENGE_CODE_1');
 		    $dataPayment['req_challenge_code_2'] = Request::get('CHALLENGE_CODE_2');
 		    $dataPayment['req_challenge_code_3'] = Request::get('CHALLENGE_CODE_3');
-		    $dataPayment['req_response_token']   = Request::get('response_token');
+		    $dataPayment['req_response_token']   = Request::get('response_token');		
+
+		    unset($dataPayment['req_token_id']);    	   
 
 		    $result = $this->doDirectPayment($dataPayment);
 		    if($result->res_response_code == '0000'){
 		    	
 		    	$result->res_redirect_url   = ($this->show_finish_page)?$this->redirect_url:NULL;
-		        $result->res_show_doku_page = $this->show_doku_success_page;	
+		        $result->res_show_doku_page = $this->show_doku_success_page;			        
 
 		        $hook->afterPayment(true,$dataPayment); 
 
 		        Session::put('dokularavel_finished',$invoice_no);
 
-			    echo json_encode($result);
+			    return redirect($this->redirect_url.'?status=success');
 			}else{
 
 				$hook->afterPayment(false,$dataPayment); 
 
-			    echo json_encode($result);
+			    // return redirect($this->redirect_url.'?status=failed');
+			    dd($result);
 			}
 
 
@@ -358,6 +380,7 @@ class DokuController extends Controller {
 		}
 	}
 
+
 	public function debug() {
 
 		if(config('dokularavel.DEBUG_MODE') == FALSE) abort(404);
@@ -375,7 +398,7 @@ class DokuController extends Controller {
 			]);
 
 		foreach($this->payment_available as $pa) {
-			echo '<a href="'.Route("DokuController.index").'?trans_id='.$invoice_no.'&payment_channel='.$pa.'">'.$invoice_no.' Payment Channel '.$pa.'</a><br/>';
+			echo '<a target="doku" href="'.Route("DokuController.index").'?trans_id='.$invoice_no.'&payment_channel='.$pa.'">'.$invoice_no.' Payment Channel '.$pa.'</a><br/>';
 		}		
 
 		echo '<hr/>';
@@ -389,6 +412,18 @@ class DokuController extends Controller {
 		echo Cache::get('doPaymentRaw');
 
 		echo '<hr/>';
+
+		echo '<strong>doDirectPayment</strong><br/>';
+		echo Cache::get('doDirectPaymentRaw');
+
+		echo '<hr/>';
+
+		echo '<strong>dataPayment</strong><br/>';
+		echo '<pre>';
+		echo print_r(Cache::get('dataPayment'));
+		echo '</pre>';
+
+		echo '<hr/>';
 		echo '<strong>Doku Laravel Session</strong>';
 		dd(Session::all());
 
@@ -398,17 +433,17 @@ class DokuController extends Controller {
 	public function finish() {
 
 		if(!$this->session_dokularavel) {
-			return redirect()->route('DokuController.index');
+			return redirect()->route('DokuController.index').'?r=session_expired';
 		}
 
 		$invoice_no = $this->session_dokularavel['trans_id'];
 
 		if(!$invoice_no) {
-			return redirect()->route('DokuController.index');
+			return redirect()->route('DokuController.index').'?r=invoice_null';
 		}
 		
 		if(Session::get('dokularavel_finished') != $invoice_no) {
-			return redirect()->route('DokuController.index');
+			return redirect()->route('DokuController.index').'?r=finished_incorrect';
 		}
 
 
