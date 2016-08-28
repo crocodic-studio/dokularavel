@@ -20,7 +20,7 @@ crocodicstudio\dokularavel\DokuLaravelServiceProvider::class,
 ```
 ## 3. Publikasi File Konfigurasi
 ```
-php artisan vendor:publish --provider="DokuLaravelServiceProvider"
+php artisan vendor:publish --provider="crocodicstudio\dokularavel\DokuLaravelServiceProvider"
 ```
 ## 4. Pengaturan Konfigurasi Dasar
 Pada folder config/ akan terdapat file baru bernama **dokularavel.php** yang isinya adalah :  
