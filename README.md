@@ -12,7 +12,7 @@ Ini adalah DOKU Payment Gateway Library yang sudah di *compile* menjadi *Package
 
 ## 1. Instalasi untuk Laravel 5.x
 ```
-composer require crocodicstudio\dokularavel
+composer require crocodicstudio/dokularavel
 ```
 ## 2. Publikasi File Konfigurasi
 ```
