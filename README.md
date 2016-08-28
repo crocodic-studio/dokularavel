@@ -121,8 +121,10 @@ Parameter 2 : payment_channel (ini adalah jenis pembayaran, anda bisa pilih angk
 
 ## 5. Fungsi HOOK
 Pada package "DokuLaravel" ini disediakan fitur HOOK dimana anda bisa menjalankan perintah apapun ketika pembayaran selesai atau sebelum pembayaran. Ada sebuah controller bernama "DokuLaravelHookController.php" di directory controller laravel anda. Terdapat 2 method yakni **beforePayment** dan **afterPayment**.  
-1. **beforePayment($data)** . Anda bisa menambahkan perintah di dalam method ini, akan dijalankan sebelum pembayaran dilakukan atau berada pada halaman index DokuLaravel. Variabel array **$data** dimana didalamnya terdapat *values* yang bisa anda manfaatkan. Keterangan lebih detail anda bisa buka file *HOOK* tersebut.  
-2. **afterPayment($status,$dataPayment)** . Anda bisa menambahkan perintah didalam method ini, akan dijalankan sesudah pembayaran selesai dilakukan. **$status** merupakan variable *boolean* yang menandakan apakah pembayaran berhasil atau tidak. **$dataPayment** merupakan variable *array* yang berisi *values* yang bisa anda manfaatkan lebih lanjut buka file *HOOK* tersebut.
+### 1. **beforePayment($data)**  
+Anda bisa menambahkan perintah di dalam method ini, akan dijalankan sebelum pembayaran dilakukan atau berada pada halaman index DokuLaravel. Variabel array **$data** dimana didalamnya terdapat *values* yang bisa anda manfaatkan. Keterangan lebih detail anda bisa buka file *HOOK* tersebut.  
+### 2. **afterPayment($status,$dataPayment)**  
+Anda bisa menambahkan perintah didalam method ini, akan dijalankan sesudah pembayaran selesai dilakukan. **$status** merupakan variable *boolean* yang menandakan apakah pembayaran berhasil atau tidak. **$dataPayment** merupakan variable *array* yang berisi *values* yang bisa anda manfaatkan lebih lanjut buka file *HOOK* tersebut.
 
 ## Jenis Pembayaran Yang Tersedia (Payment Channel)
 Adapun jenis - jenis pembayaran yang tersedia saat ini di DOKU dan yang terintegrasi pada "DokuLaravel" package ini yakni :   
