@@ -19,7 +19,8 @@ composer require crocodicstudio\dokularavel
 php artisan vendor:publish --provider=DokuLaravelServiceProvider
 ```
 ## 3. Pengaturan Konfigurasi Dasar
-Pada folder config/ akan terdapat file baru bernama **dokularavel.php** yang isinya adalah :
+Pada folder config/ akan terdapat file baru bernama **dokularavel.php** yang isinya adalah :  
+**Yang wajib diisi atau disesuaikan yakni SHARED_KEY,MALL_ID, dan pengaturan TABLE**
 ```
 return [
 	
