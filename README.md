@@ -46,6 +46,7 @@ return [
 	| 15 = Credit Card
 	| 04 = Doku Wallet
 	| 02 = Mandiri Clickpay
+	| 05 = Permata VA Lite
 	| 14 = ALFA
 	|
 	| This setting is for default payment channel otherwise you can set the payment channel on the fly by url parameter "payment_channel"
@@ -139,6 +140,7 @@ Adapun jenis - jenis pembayaran yang tersedia saat ini di DOKU dan yang terinteg
 - 15 = Credit Card
 - 04 = Doku Wallet
 - 02 = Mandiri Clickpay
+- 05 = Permata VA Lite
 - 14 = ALFA
 
 ## Studi Kasus Penggunaan
