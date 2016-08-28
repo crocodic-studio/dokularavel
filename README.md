@@ -1,6 +1,7 @@
 # DokuLaravel - DOKU Payment Gateway Library For Laravel
+[![Total Downloads](https://poser.pugx.org/crocodicstudio/dokularavel/downloads)](https://packagist.org/packages/crocodicstudio/dokularavel)[![Latest Unstable Version](https://poser.pugx.org/crocodicstudio/dokularavel/v/unstable)](https://packagist.org/packages/crocodicstudio/dokularavel)[![License](https://poser.pugx.org/crocodicstudio/dokularavel/license)](https://packagist.org/packages/crocodicstudio/dokularavel)[![Monthly Downloads](https://poser.pugx.org/crocodicstudio/dokularavel/d/monthly)](https://packagist.org/packages/crocodicstudio/dokularavel)
 
-![Doku Laravel Screenshot](http://crubooster.com/dokularavel_ss.png)
+[![Doku Laravel Screenshot](http://crubooster.com/dokularavel_ss.png)]
 
 Ini adalah DOKU Payment Gateway Library yang sudah di *compile* menjadi *Package* untuk Laravel. API DOKU ini merupakan API dari DOKU Resmi yang berjenis Merchant Hosted, artinya tetap menggunakan FORM Pembayaran yang digenerate dari DOKU melalui Javascript, dan bukan yang model redirect ke halaman DOKU melainkan Form DOKU ada di server kita dan pembayaran seolah dilakukan di server kita.
 
