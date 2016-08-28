@@ -1,8 +1,13 @@
 # DokuLaravel - DOKU Payment Gateway Library For Laravel
 
-![Doku Laravel Screenshot](https://lh5.googleusercontent.com/ySNutpKt3tvZ8XrwS-1Urc9R67DCAFGR7-qsRrBt9YTP5Al9BTFwOwasM002a5EGzfyC2BLmTGyfEnY=w1366-h643-rw)
+![Doku Laravel Screenshot](http://crubooster.com/dokularavel_ss.png)
 
 Ini adalah DOKU Payment Gateway Library yang sudah di *compile* menjadi *Package* untuk Laravel. API DOKU ini merupakan API dari DOKU Resmi yang berjenis Merchant Hosted, artinya tetap menggunakan FORM Pembayaran yang digenerate dari DOKU melalui Javascript, dan bukan yang model redirect ke halaman DOKU melainkan Form DOKU ada di server kita dan pembayaran seolah dilakukan di server kita.
+
+## Kebutuhan Dasar
+1. SHARED_KEY , didapat dari DOKU, silahkan hubungi [DOKU](http://doku.com)
+2. MALL_ID, didapat dari DOKU, silahkan hubungi [DOKU](http://doku.com)
+3. *Table Database* berkaitan Order/Invoice dan memilik field minimal **no_invoice,customer_name,customer_phone,customer_email,customer_address,total**
 
 ## 1. Instalasi untuk Laravel 5.x
 ```
@@ -19,14 +24,14 @@ return [
 	
 	/*
 	| ---------------------------------------------------------
-	| Setting the payment route in PAYMENT_PATH, SHARED_KEY & MALL_ID is code that you get from DOKU Merchant Page.
+	| Setting the payment route in SHARED_KEY & MALL_ID is code that you get from DOKU Merchant Page.
 	| ---------------------------------------------------------
 	|
 	*/
 	'PAYMENT_PATH' => 'dokularavel',
 	'SHARED_KEY'   => NULL, 
 	'MALL_ID'      => NULL,
-	'CURRENCY'	   => 360,
+	'CURRENCY'     => 360, //This is default 360 (IDR), no need to change.
 
 	/*
 	| ---------------------------------------------------------
@@ -113,7 +118,12 @@ Parameter 1 : trans_id (ini adalah nomor transaksi pada table anda sendiri)
 Parameter 2 : payment_channel (ini adalah jenis pembayaran, anda bisa pilih angka berapa sesuai penjelasan diatas)  
 **Contoh : http://localhost/projek_anda/public/dokularavel?trans_id=INV0001&payment_channel=04**
 
-### Jenis Pembayaran Yang Tersedia (Payment Channel)
+## 5. Fungsi HOOK
+Pada package "DokuLaravel" ini disediakan fitur HOOK dimana anda bisa menjalankan perintah apapun ketika pembayaran selesai atau sebelum pembayaran. Ada sebuah controller bernama "DokuLaravelHookController.php" di directory controller laravel anda. Terdapat 2 method yakni **beforePayment** dan **afterPayment**.
+1. **beforePayment($data)** . Anda bisa menambahkan perintah di dalam method ini, akan dijalankan sebelum pembayaran dilakukan atau berada pada halaman index DokuLaravel. Variabel array **$data** dimana didalamnya terdapat *values* yang bisa anda manfaatkan. Keterangan lebih detail anda bisa buka file *HOOK* tersebut.
+2. **afterPayment($status,$dataPayment)** . Anda bisa menambahkan perintah didalam method ini, akan dijalankan sesudah pembayaran selesai dilakukan. **$status** merupakan variable *boolean* yang menandakan apakah pembayaran berhasil atau tidak. **$dataPayment** merupakan variable *array* yang berisi *values* yang bisa anda manfaatkan lebih lanjut buka file *HOOK* tersebut.
+
+## Jenis Pembayaran Yang Tersedia (Payment Channel)
 Adapun jenis - jenis pembayaran yang tersedia saat ini di DOKU dan yang terintegrasi pada "DokuLaravel" package ini yakni :   
 - 15 = Credit Card
 - 04 = Doku Wallet
