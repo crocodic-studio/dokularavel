@@ -161,7 +161,7 @@ class DokuController extends Controller {
 		$data['currency']        = $this->currency;
 		$data['payment_channel'] = $this->payment_channel;	
 
-		$hook = new \App\Http\Controllers\DokuHookController;
+		$hook = new \App\Http\Controllers\DokuLaravelHookController;
 		$hook->beforePayment($data);		
 		
 		return view('dokularavel::payment_form',$data);
@@ -170,7 +170,7 @@ class DokuController extends Controller {
 	public function pay() {		
 		$this->checkParams();
 
-		$hook = new \App\Http\Controllers\DokuHookController;
+		$hook = new \App\Http\Controllers\DokuLaravelHookController;
 
 		$token            = Request::get('doku_token');
 		$pairing_code     = Request::get('doku_pairing_code');
