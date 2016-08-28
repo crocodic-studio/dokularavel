@@ -106,15 +106,15 @@ return [
 ```
 Silahkan anda atur terlebih dahulu konfigurasi diatas sesuai dengan penjelasan yang ada diatas :) .
 ## 4. Uji coba
-Untuk mengakses halaman DokuLaravel ini ada 2 parameter yang harus anda lengkapi pada paramete URL . 
-Base URL : /dokularavel (ini default PAYMENT_PATH bisa anda ganti di konfigurasi)
-Parameter 1 : trans_id (ini adalah nomor transaksi pada table anda sendiri)
-Parameter 2 : payment_channel (ini adalah jenis pembayaran, anda bisa pilih angka berapa sesuai penjelasan diatas)
+Untuk mengakses halaman DokuLaravel ini ada 2 parameter yang harus anda lengkapi pada paramete URL .   
+Base URL : /dokularavel (ini default PAYMENT_PATH bisa anda ganti di konfigurasi)  
+Parameter 1 : trans_id (ini adalah nomor transaksi pada table anda sendiri)  
+Parameter 2 : payment_channel (ini adalah jenis pembayaran, anda bisa pilih angka berapa sesuai penjelasan diatas)  
 **Contoh : http://localhost/projek_anda/public/dokularavel?trans_id=INV0001&payment_channel=04**
 
 ### Jenis Pembayaran Yang Tersedia (Payment Channel)
-Adapun jenis - jenis pembayaran yang tersedia saat ini di DOKU dan yang terintegrasi pada "DokuLaravel" package ini yakni : 
-15 = Credit Card
-04 = Doku Wallet
-02 = Mandiri Clickpay
-14 = ALFA
+Adapun jenis - jenis pembayaran yang tersedia saat ini di DOKU dan yang terintegrasi pada "DokuLaravel" package ini yakni :   
+- 15 = Credit Card
+- 04 = Doku Wallet
+- 02 = Mandiri Clickpay
+- 14 = ALFA
