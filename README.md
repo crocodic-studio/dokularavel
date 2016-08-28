@@ -14,11 +14,15 @@ Ini adalah DOKU Payment Gateway Library yang sudah di *compile* menjadi *Package
 ```
 composer require crocodicstudio/dokularavel
 ```
-## 2. Publikasi File Konfigurasi
+## 2. Tambahkan ke Service Provider (config/app.php)
 ```
-php artisan vendor:publish --provider=DokuLaravelServiceProvider
+crocodicstudio\dokularavel\DokuLaravelServiceProvider::class,
 ```
-## 3. Pengaturan Konfigurasi Dasar
+## 3. Publikasi File Konfigurasi
+```
+php artisan vendor:publish --provider="DokuLaravelServiceProvider"
+```
+## 4. Pengaturan Konfigurasi Dasar
 Pada folder config/ akan terdapat file baru bernama **dokularavel.php** yang isinya adalah :  
 **Yang wajib diisi atau disesuaikan yakni SHARED_KEY,MALL_ID, dan pengaturan TABLE**
 ```
@@ -113,7 +117,7 @@ return [
 ];
 ```
 Silahkan anda atur terlebih dahulu konfigurasi diatas sesuai dengan penjelasan yang ada diatas :) .
-## 4. Uji coba
+## 5. Uji coba
 Untuk mengakses halaman DokuLaravel ini ada 2 parameter yang harus anda lengkapi pada paramete URL .   
 Base URL : /dokularavel (ini default PAYMENT_PATH bisa anda ganti di konfigurasi)  
 Parameter 1 : trans_id (ini adalah nomor transaksi pada table anda sendiri)  
@@ -123,7 +127,7 @@ Parameter 2 : payment_channel (ini adalah jenis pembayaran, anda bisa pilih angk
 http://localhost/projek_anda/public/dokularavel?trans_id=INV0001&payment_channel=04
 ```
 
-## 5. Fungsi HOOK
+## 6. Fungsi HOOK
 Pada package "DokuLaravel" ini disediakan fitur HOOK dimana anda bisa menjalankan perintah apapun ketika pembayaran selesai atau sebelum pembayaran. Ada sebuah controller bernama "DokuLaravelHookController.php" di directory controller laravel anda. Terdapat 2 method yakni **beforePayment** dan **afterPayment**.  
 ### 1. **beforePayment($data)**  
 Anda bisa menambahkan perintah di dalam method ini, akan dijalankan sebelum pembayaran dilakukan atau berada pada halaman index DokuLaravel. Variabel array **$data** dimana didalamnya terdapat *values* yang bisa anda manfaatkan. Keterangan lebih detail anda bisa buka file *HOOK* tersebut.  
