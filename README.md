@@ -1,5 +1,4 @@
-# dokularavel
-> This package is DOKU Payment Gateway Library for Laravel
+# DokuLaravel - DOKU Payment Gateway Library For Laravel
 
 Ini adalah DOKU Payment Gateway Library yang sudah di *compile* menjadi *Package* untuk Laravel. API DOKU ini merupakan API dari DOKU Resmi yang berjenis Merchant Hosted, artinya tetap menggunakan FORM Pembayaran yang digenerate dari DOKU melalui Javascript, dan bukan yang model redirect ke halaman DOKU melainkan Form DOKU ada di server kita dan pembayaran seolah dilakukan di server kita.
 
