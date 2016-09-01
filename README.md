@@ -1,5 +1,5 @@
 # DokuLaravel - DOKU Payment Gateway Library For Laravel
-[![Total Downloads](https://poser.pugx.org/crocodicstudio/dokularavel/downloads)](https://packagist.org/packages/crocodicstudio/dokularavel)[![Latest Unstable Version](https://poser.pugx.org/crocodicstudio/dokularavel/v/unstable)](https://packagist.org/packages/crocodicstudio/dokularavel)[![License](https://poser.pugx.org/crocodicstudio/dokularavel/license)](https://packagist.org/packages/crocodicstudio/dokularavel)[![Monthly Downloads](https://poser.pugx.org/crocodicstudio/dokularavel/d/monthly)](https://packagist.org/packages/crocodicstudio/dokularavel)
+[![Total Downloads](https://poser.pugx.org/crocodicstudio/dokularavel/downloads)](https://packagist.org/packages/crocodicstudio/dokularavel) [![Latest Unstable Version](https://poser.pugx.org/crocodicstudio/dokularavel/v/unstable)](https://packagist.org/packages/crocodicstudio/dokularavel) [![License](https://poser.pugx.org/crocodicstudio/dokularavel/license)](https://packagist.org/packages/crocodicstudio/dokularavel) [![Monthly Downloads](https://poser.pugx.org/crocodicstudio/dokularavel/d/monthly)](https://packagist.org/packages/crocodicstudio/dokularavel)
 
 ![Doku Laravel](http://crudbooster.com/dokularavel_ss.png)
 
@@ -37,7 +37,9 @@ return [
 	'PAYMENT_PATH' => 'dokularavel',
 	'SHARED_KEY'   => NULL, 
 	'MALL_ID'      => NULL,
-	'CURRENCY'	   => 360,
+	
+	/* CURRENCY */
+	'CURRENCY'	   => 360, // for default is IDR (360), No Need to edit
 	/* 
 	| ---------------------------------------------------------
 	| Define your table of order and the fields
