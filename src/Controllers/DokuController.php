@@ -212,10 +212,6 @@ class DokuController extends Controller {
 		if($token) {
 			$params['token'] = $token;
 		}
-
-		if($this->payment_channel == '02') {
-			unset($params['currency']);
-		}
 		
 		$words    = $this->doCreateWords($params);
 		$wordsRaw = $this->doCreateWordsRaw($params);
