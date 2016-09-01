@@ -11,7 +11,9 @@ return [
 	'PAYMENT_PATH' => 'dokularavel',
 	'SHARED_KEY'   => NULL, 
 	'MALL_ID'      => NULL,
-	'CURRENCY'	   => 360,
+	
+	/* CURRENCY */
+	'CURRENCY'	=> 360, //For default IDR is 360, so no need to edit this one
 
 	/* 
 	| ---------------------------------------------------------
