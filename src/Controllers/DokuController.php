@@ -91,7 +91,7 @@ class DokuController extends Controller {
 				Session::put('dokularavel',[
 					'trans_id'         =>Request::get('trans_id'),
 					'payment_channel'  =>$this->payment_channel,
-					'amount'           =>preg_replace('/\D/', '', $query->{$this->table_field_amount}),
+					'amount'           =>preg_replace('/\D/', '', $query->{$this->table_field_amount}).'.00',
 					'customer_name'    =>preg_replace('/[^a-zA-Z ]+/', '', $query->{$this->table_field_customer_name}),
 					'customer_phone'   =>str_limit(preg_replace('/\D/', '', $query->{$this->table_field_customer_phone}), 12, ''),
 					'customer_email'   =>$query->{$this->table_field_customer_email},
@@ -144,9 +144,7 @@ class DokuController extends Controller {
 
 	public function index() {				
 		//Validation the parameters
-		$this->checkParams();				
-		
-		$this->amount = $this->amount.'.00';				
+		$this->checkParams();										
 
 		$params = array(
 			'amount'   => $this->amount,
