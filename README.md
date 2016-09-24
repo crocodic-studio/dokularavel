@@ -160,7 +160,6 @@ Adapun jenis - jenis pembayaran yang tersedia saat ini di DOKU dan yang terinteg
 - 04 = Doku Wallet
 - 02 = Mandiri Clickpay
 - 05 = Permata VA Lite
-- 14 = ALFA
 
 ## Studi Kasus Penggunaan
 1. Mobile Apps, Bagi anda yang membutuhkan dalam penggunaan Aplikasi Mobile, anda tinggal membuat **WebView** dan memasukkan URL DokuLaravel diatas
