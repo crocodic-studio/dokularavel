@@ -49,6 +49,7 @@ return [
 	'MALL_ID'      => NULL,
 	'PERMATA_CODE' => NULL,
 	'CURRENCY'     => 360,
+	'NOTIFY_SCREET_CODE'=>'123456',
 
 	/* 
 	| ---------------------------------------------------------
@@ -153,7 +154,12 @@ Pada package "DokuLaravel" ini disediakan fitur HOOK dimana anda bisa menjalanka
 Anda bisa menambahkan perintah di dalam method ini, akan dijalankan sebelum pembayaran dilakukan atau berada pada halaman index DokuLaravel. Variabel array **$data** dimana didalamnya terdapat *values* yang bisa anda manfaatkan. Keterangan lebih detail anda bisa buka file *HOOK* tersebut.  
 ### 2. **afterPayment($status,$dataPayment)**  
 Anda bisa menambahkan perintah didalam method ini, akan dijalankan sesudah pembayaran selesai dilakukan. **$status** merupakan variable *boolean* yang menandakan apakah pembayaran berhasil atau tidak. **$dataPayment** merupakan variable *array* yang berisi *values* yang bisa anda manfaatkan lebih lanjut buka file *HOOK* tersebut.
-
+## URL Notify
+URL ini digunakan untuk memberikan akses DOKU untuk memberikan notifikasi ke Server kita, anda bisa menuliskan format URL berikut di dashboard Merchant Doku anda pada kolom "URL Notify" :
+```
+http://yourdomain.com/dokularavel/notify/[NOTIFY_SCREET_CODE]
+```
+[NOTIFY_SCREET_CODE] dapat anda atur pada file konfigurasi. Digunakan untuk alasan keamanan aktifitas tidak diinginkan.
 ## Jenis Pembayaran Yang Tersedia (Payment Channel)
 Adapun jenis - jenis pembayaran yang tersedia saat ini di DOKU dan yang terintegrasi pada "DokuLaravel" package ini yakni :   
 - 15 = Credit Card
