@@ -17,11 +17,12 @@ return [
 	| ---------------------------------------------------------
 	|
 	*/
-	'PAYMENT_PATH' => 'dokularavel',
-	'SHARED_KEY'   => NULL, 
-	'MALL_ID'      => NULL,
-	'PERMATA_CODE' => NULL,
-	'CURRENCY'	   => 360,
+	'PAYMENT_PATH'       => 'dokularavel',
+	'SHARED_KEY'         => NULL, 
+	'MALL_ID'            => NULL,
+	'PERMATA_CODE'       => NULL,
+	'CURRENCY'           => 360,
+	'NOTIFY_SCREET_CODE' =>'123456',
 
 	/* 
 	| ---------------------------------------------------------

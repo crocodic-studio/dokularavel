@@ -422,7 +422,12 @@ class DokuController extends Controller {
 		}
 	}
 
-	public function notify() {
+	public function notify($screet_code) {
+
+		if(!$screet_code) abort(404);
+
+		if($screet_code != config('dokularavel.NOTIFY_SCREET_CODE')) abort(404);
+
 		$allldata 		   = Request::all();
 		$trans_id          = Request::get('TRANSIDMERCHANT');
 		$status            = Request::get('RESULTMSG');	
