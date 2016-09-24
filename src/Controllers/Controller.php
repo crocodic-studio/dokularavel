@@ -11,16 +11,30 @@ use Cache;
 class Controller extends BaseController
 {    
 
-    //API DOKU ENDPOINT
+    //API DOKU ENDPOINT	
 	var $prePaymentUrl      = 'http://staging.doku.com/api/payment/PrePayment';
 	var $paymentUrl         = 'http://staging.doku.com/api/payment/paymentMip';
 	var $directPaymentUrl   = 'http://staging.doku.com/api/payment/PaymentMIPDirect';
 	var $generateCodeUrl    = 'http://staging.doku.com/api/payment/doGeneratePaymentCode';
 	var $redirectPaymentUrl = 'http://staging.doku.com/api/payment/doInitiatePayment';
 	var $captureUrl         = 'http://staging.doku.com/api/payment/DoCapture';
-	var $paymentStatusUrl 	= 'https://pay.doku.com/Suite/CheckStatus';
+	var $paymentStatusUrl   = 'https://staging.doku.com/Suite/CheckStatus';
+
+	private function checkLiveMode() {
+		if(config('dokularavel.LIVE_MODE') == TRUE) {
+			$this->prePaymentUrl      = 'http://pay.doku.com/api/payment/PrePayment';
+			$this->paymentUrl         = 'http://pay.doku.com/api/payment/paymentMip';
+			$this->directPaymentUrl   = 'http://pay.doku.com/api/payment/PaymentMIPDirect';
+			$this->generateCodeUrl    = 'http://pay.doku.com/api/payment/doGeneratePaymentCode';
+			$this->redirectPaymentUrl = 'http://pay.doku.com/api/payment/doInitiatePayment';
+			$this->captureUrl         = 'http://pay.doku.com/api/payment/DoCapture';
+			$this->paymentStatusUrl   = 'https://pay.doku.com/Suite/CheckStatus';
+		}
+	}
 
     public function doPrePayment($data){
+
+    	$this->checkLiveMode();
 
 		$data['req_basket'] = $this->formatBasket($data['req_basket']);
 
@@ -41,6 +55,8 @@ class Controller extends BaseController
 	}
 
 	public function doPayment($data){
+
+		$this->checkLiveMode();
 
 		$data['req_basket'] = $this->formatBasket($data['req_basket']);
 
@@ -67,6 +83,8 @@ class Controller extends BaseController
 
 	public function doDirectPayment($data){
 
+		$this->checkLiveMode();
+
 		$ch = curl_init( $this->directPaymentUrl );
 		curl_setopt( $ch, CURLOPT_POST, 1);
 		curl_setopt( $ch, CURLOPT_POSTFIELDS, 'data='. json_encode($data));
@@ -89,6 +107,8 @@ class Controller extends BaseController
 	}
 
 	public function doGeneratePaycode($data){
+
+		$this->checkLiveMode();		
 
 		$ch = curl_init( $this->generateCodeUrl );
 		curl_setopt( $ch, CURLOPT_POST, 1);
@@ -113,6 +133,8 @@ class Controller extends BaseController
 
 	public function doRedirectPayment($data){
 
+		$this->checkLiveMode();
+
 		$ch = curl_init( $this->redirectPaymentUrl );
 		curl_setopt( $ch, CURLOPT_POST, 1);
 		curl_setopt( $ch, CURLOPT_POSTFIELDS, 'data='. json_encode($dataPayment));
@@ -136,6 +158,8 @@ class Controller extends BaseController
 
 	public function doCapture($data){
 
+		$this->checkLiveMode();
+
 		$ch = curl_init( $this->captureUrl );
 		curl_setopt( $ch, CURLOPT_POST, 1);
 		curl_setopt( $ch, CURLOPT_POSTFIELDS, 'data='. json_encode($data));
@@ -158,6 +182,8 @@ class Controller extends BaseController
 
 
 	public function doCheckPaymentStatus($trans_id){	
+
+		$this->checkLiveMode();
 
 		$data                    = array();
 		$data['MALLID']          = config('dokularavel.MALL_ID');
@@ -183,60 +209,34 @@ class Controller extends BaseController
 	}
 
 	public function doCreateWords($data){
-
 		if(!empty($data['device_id'])){ 
-
 			if(!empty($data['pairing_code'])){
-
 				return sha1($data['amount'] . config('dokularavel.MALL_ID') . config('dokularavel.SHARED_KEY') . $data['invoice'] . $data['currency'] . $data['token'] . $data['pairing_code'] . $data['device_id']);
-
 			}else{
-
 				return sha1($data['amount'] . config('dokularavel.MALL_ID') . config('dokularavel.SHARED_KEY') . $data['invoice'] . $data['currency'] . $data['device_id']);
-
 			}
-
 		}else if(!empty($data['pairing_code'])){
-
 			return sha1($data['amount'] . config('dokularavel.MALL_ID') . config('dokularavel.SHARED_KEY') . $data['invoice'] . $data['currency'] . $data['token'] . $data['pairing_code']);
-
 		}else if(!empty($data['currency'])){
-
 			return sha1($data['amount'] . config('dokularavel.MALL_ID') . config('dokularavel.SHARED_KEY') . $data['invoice'] . $data['currency']);
-
 		}else{
-
 			return sha1($data['amount'] . config('dokularavel.MALL_ID') . config('dokularavel.SHARED_KEY') . $data['invoice']);
-
 		}
 	}
 
 	public function doCreateWordsRaw($data){
-
 		if(!empty($data['device_id'])){
-
 			if(!empty($data['pairing_code'])){
-
-				return $data['amount'] . config('dokularavel.MALL_ID') . config('dokularavel.SHARED_KEY') . $data['invoice'] . $data['currency'] . $data['token'] . $data['pairing_code'] . $data['device_id'];
-
+				return $data['amount'].config('dokularavel.MALL_ID').config('dokularavel.SHARED_KEY').$data['invoice'].$data['currency'].$data['token'].$data['pairing_code'].$data['device_id'];
 			}else{
-
-				return $data['amount'] . config('dokularavel.MALL_ID') . config('dokularavel.SHARED_KEY') . $data['invoice'] . $data['currency'] . $data['device_id'];
-
+				return $data['amount'].config('dokularavel.MALL_ID').config('dokularavel.SHARED_KEY').$data['invoice'].$data['currency'].$data['device_id'];
 			}
-
 		}else if(!empty($data['pairing_code'])){
-
-			return $data['amount'] . config('dokularavel.MALL_ID') . config('dokularavel.SHARED_KEY') . $data['invoice'] . $data['currency'] . $data['token'] . $data['pairing_code'];
-
+			return $data['amount'].config('dokularavel.MALL_ID').config('dokularavel.SHARED_KEY').$data['invoice'].$data['currency'].$data['token'].$data['pairing_code'];
 		}else if(!empty($data['currency'])){
-
-			return $data['amount'] . config('dokularavel.MALL_ID') . config('dokularavel.SHARED_KEY') . $data['invoice'] . $data['currency'];
-
+			return $data['amount'].config('dokularavel.MALL_ID').config('dokularavel.SHARED_KEY').$data['invoice'].$data['currency'];
 		}else{
-
-			return $data['amount'] . config('dokularavel.MALL_ID') . config('dokularavel.SHARED_KEY') . $data['invoice'];
-
+			return $data['amount'].config('dokularavel.MALL_ID').config('dokularavel.SHARED_KEY').$data['invoice'];
 		}
 	}
 
