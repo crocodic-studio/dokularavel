@@ -98,14 +98,14 @@ class DokuController extends Controller {
 					
 			if($query) {				
 				$this->invoice = [
-					'trans_id'         =>$query->{$this->table_field_no_order},
-					'payment_channel'  =>$query->{$this->table_field_payment_channel},
-					'amount'           =>preg_replace('/\D/', '', $query->{$this->table_field_amount}).'.00',
-					'customer_name'    =>preg_replace('/[^a-zA-Z ]+/', '', $query->{$this->table_field_customer_name}),
-					'customer_phone'   =>str_limit(preg_replace('/\D/', '', $query->{$this->table_field_customer_phone}), 12, ''),
-					'customer_email'   =>$query->{$this->table_field_customer_email},
-					'customer_address' =>$query->{$this->table_field_customer_address},
-					'payment_status'   =>$query->{$this->table_field_payment_status}
+					'trans_id'         =>trim($query->{$this->table_field_no_order}),
+					'payment_channel'  =>trim($query->{$this->table_field_payment_channel}),
+					'amount'           =>trim(preg_replace('/\D/', '', $query->{$this->table_field_amount}).'.00'),
+					'customer_name'    =>trim(preg_replace('/[^a-zA-Z ]+/', '', $query->{$this->table_field_customer_name})),
+					'customer_phone'   =>trim(str_limit(preg_replace('/\D/', '', $query->{$this->table_field_customer_phone}), 12, '')),
+					'customer_email'   =>trim($query->{$this->table_field_customer_email}),
+					'customer_address' =>trim($query->{$this->table_field_customer_address}),
+					'payment_status'   =>trim($query->{$this->table_field_payment_status})
 					];		
 						
 			}else{
