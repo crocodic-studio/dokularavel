@@ -22,12 +22,12 @@ class Controller extends BaseController
 
 	private function checkLiveMode() {
 		if(config('dokularavel.LIVE_MODE') == TRUE) {
-			$this->prePaymentUrl      = 'http://pay.doku.com/api/payment/PrePayment';
-			$this->paymentUrl         = 'http://pay.doku.com/api/payment/paymentMip';
-			$this->directPaymentUrl   = 'http://pay.doku.com/api/payment/PaymentMIPDirect';
-			$this->generateCodeUrl    = 'http://pay.doku.com/api/payment/doGeneratePaymentCode';
-			$this->redirectPaymentUrl = 'http://pay.doku.com/api/payment/doInitiatePayment';
-			$this->captureUrl         = 'http://pay.doku.com/api/payment/DoCapture';
+			$this->prePaymentUrl      = 'https://pay.doku.com/api/payment/PrePayment';
+			$this->paymentUrl         = 'https://pay.doku.com/api/payment/paymentMip';
+			$this->directPaymentUrl   = 'https://pay.doku.com/api/payment/PaymentMIPDirect';
+			$this->generateCodeUrl    = 'https://pay.doku.com/api/payment/doGeneratePaymentCode';
+			$this->redirectPaymentUrl = 'https://pay.doku.com/api/payment/doInitiatePayment';
+			$this->captureUrl         = 'https://pay.doku.com/api/payment/DoCapture';
 			$this->paymentStatusUrl   = 'https://pay.doku.com/Suite/CheckStatus';
 		}
 	}
