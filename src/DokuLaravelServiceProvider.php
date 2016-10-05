@@ -30,6 +30,9 @@ class DokuLaravelServiceProvider extends ServiceProvider
      */
     public function register()
     {                                 
+        $this->mergeConfigFrom(
+             __DIR__.'/Config/dokularavel.php', 'dokularavel'
+        );
 
         $this->app['dokularavel'] = $this->app->share(function ()
         {
