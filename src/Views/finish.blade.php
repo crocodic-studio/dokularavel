@@ -37,12 +37,34 @@
 	                    <li>
 	                    	<div class='form-group'>
 	                    		<h3 style="color:#B7042C;" align="center">
-	                    			<div id='icon-tick' align="center"><img style="width:30%" src='{{ asset("vendor/dokularavel/stop.png") }}'/></div><br/>
+	                    			<div id='icon-tick' align="center"><img style="width:30%" src='{{ asset("public/vendor/dokularavel/stop.png") }}'/></div><br/>
 	                    			<span style="font-size:27px">Transaction Failed</span>
 	                    		</h3>
 	                    	</div>
 	                    </li>
                     </ul>
+                    @elseif(Request::get('status') == 'waiting_payment')
+                    <ul>
+	                    <li>
+	                    	<div class='form-group' align="center">
+	                    		<h3 style="color:#B7042C;">	                    			
+	                    			<span id='status' style="font-size:27px">Payment In Process...</span>
+	                    		</h3>
+	                    		<p>If you have make a payment, please waiting for 4 ~ 6 minutes while Bank transfer process. We will notify to you if your payment has been received.</p>
+	                    		<form name="formRedirect" id="formRedirect" method="POST" action="{{Route('DokuController.checkStatus')}}">								   
+								<input type="hidden" name="trans_id" value="{{$doku_invoice}}">                                								
+								<input style="display:none" type="submit" class="default-btn font-reg" value="Check Status">
+								</form>
+	                    	</div>
+	                    </li>
+                    </ul>
+                    <script type="text/javascript">
+                    $(function() {
+                    	setInterval(function() {
+                    		$('#formRedirect').submit();
+                    	},10000);
+                    })                    	
+                    </script>
                     @elseif(Request::get('status') =='atmWaiting')
  						<div class="color-border padd-default">
 							<div class="paymentcode success" style="text-align:center">
@@ -94,7 +116,7 @@
 										</div>
 									</li>
 								</ul>
-								<p>Please note maybe the system is need to propagation the data from Bank, so after make a payment please waiting about 30 - 45 minutes before you press the Confirm Payment button</p>
+								<p>Please note maybe the system is need to propagation the data from Bank, so after make a payment please waiting about 5 ~ 6 minutes before you press the Confirm Payment button</p>
 								<form name="formRedirect" id="formRedirect" method="POST" action="{{Route('DokuController.checkStatus')}}">
 								   
 								<input type="hidden" name="trans_id" value="{{$doku_invoice}}">                                								
@@ -109,7 +131,7 @@
 	                    <li>
 	                    	<div class='form-group'>
 	                    		<h3 style="color:#00af11;" align="center">
-	                    			<div id='icon-tick' align="center"><img style="width:50%" src='{{ asset("vendor/dokularavel/icon-tick.png") }}'/></div>
+	                    			<div id='icon-tick' align="center"><img style="width:50%" src='{{ asset("public/vendor/dokularavel/icon-tick.png") }}'/></div>
 	                    			<span style="font-size:27px">Transaction Success</span>
 	                    		</h3>
 	                    	</div>
