@@ -23,6 +23,7 @@ class DokuController extends Controller {
 	var $table_field_payment_date;
 	var $table_field_payment_channel;
 	var $table_field_payment_approval_code;
+	var $table_field_payment_session_id;
 	var $default_payment_channel;	
 
 	var $payment_available = array();
@@ -47,6 +48,7 @@ class DokuController extends Controller {
 		$this->table_field_payment_status 	= config('dokularavel.TABLE_FIELD_PAYMENT_STATUS');
 		$this->table_field_payment_channel 	= config('dokularavel.TABLE_FIELD_PAYMENT_CHANNEL');		
 		$this->table_field_payment_approval_code = config('dokularavel.TABLE_FIELD_PAYMENT_APPROVAL_CODE');
+		$this->table_field_payment_session_id = config('dokularavel.TABLE_FIELD_PAYMENT_SESSION_ID');
 		$this->shared_key                   = config('dokularavel.SHARED_KEY');
 		$this->mall_id                      = config('dokularavel.MALL_ID');
 		$this->currency                     = config('dokularavel.CURRENCY');
@@ -270,7 +272,8 @@ class DokuController extends Controller {
 					->update([
 						$this->table_field_payment_status        =>'PAID',
 						$this->table_field_payment_date          =>date('Y-m-d H:i:s'),
-						$this->table_field_payment_approval_code =>$result->res_approval_code
+						$this->table_field_payment_approval_code =>$result->res_approval_code,
+						$this->table_field_payment_session_id => $dataPayment['req_session_id']
 						]);
 			        
 					$hook->afterPayment(true,$dataPayment);    					
@@ -281,7 +284,8 @@ class DokuController extends Controller {
 					DB::table($this->table_order)
 					->where($this->table_field_no_order,$this->invoice['trans_id'])
 					->update([
-						$this->table_field_payment_status        =>'UNPAID'						
+						$this->table_field_payment_status        =>'UNPAID',
+						$this->table_field_payment_session_id => $dataPayment['req_session_id']						
 						]);
 
 					$hook->afterPayment(false,$dataPayment); 
@@ -293,7 +297,8 @@ class DokuController extends Controller {
 				DB::table($this->table_order)
 					->where($this->table_field_no_order,$this->invoice['trans_id'])
 					->update([
-						$this->table_field_payment_status        =>'UNPAID'						
+						$this->table_field_payment_status        =>'UNPAID',
+						$this->table_field_payment_session_id => $dataPayment['req_session_id']						
 						]);
 
 				$hook->afterPayment(false,$dataPayment); 
@@ -320,7 +325,8 @@ class DokuController extends Controller {
 					->update([
 						$this->table_field_payment_status        =>'PAID',
 						$this->table_field_payment_date          =>date('Y-m-d H:i:s'),
-						$this->table_field_payment_approval_code =>$result->res_approval_code
+						$this->table_field_payment_approval_code =>$result->res_approval_code,
+						$this->table_field_payment_session_id => $dataPayment['req_session_id']
 						]);
 
 		        $hook->afterPayment(true,$dataPayment); 	  
@@ -329,6 +335,13 @@ class DokuController extends Controller {
 
 				echo json_encode($result);
 			}else{
+
+				DB::table($this->table_order)
+					->where($this->table_field_no_order,$this->invoice['trans_id'])
+					->update([
+						$this->table_field_payment_status        =>'UNPAID',
+						$this->table_field_payment_session_id => $dataPayment['req_session_id']
+						]);
 
 				$hook->afterPayment(false,$dataPayment); 
 
@@ -357,7 +370,8 @@ class DokuController extends Controller {
 					->update([
 						$this->table_field_payment_status        =>'PAID',
 						$this->table_field_payment_date          =>date('Y-m-d H:i:s'),
-						$this->table_field_payment_approval_code =>$result->res_approval_code
+						$this->table_field_payment_approval_code =>$result->res_approval_code,
+						$this->table_field_payment_session_id => $dataPayment['req_session_id']
 						]);		        
 
 		        $hook->afterPayment(true,$dataPayment); 
@@ -370,7 +384,8 @@ class DokuController extends Controller {
 				DB::table($this->table_order)
 					->where($this->table_field_no_order,$this->invoice['trans_id'])
 					->update([
-						$this->table_field_payment_status        =>'UNPAID'						
+						$this->table_field_payment_status        =>'UNPAID',
+						$this->table_field_payment_session_id => $dataPayment['req_session_id']						
 						]);
 
 				$hook->afterPayment(false,$dataPayment); 
@@ -401,7 +416,8 @@ class DokuController extends Controller {
 				DB::table($this->table_order)
 					->where($this->table_field_no_order,$this->invoice['trans_id'])
 					->update([
-						$this->table_field_payment_status        =>'WAITING TRANSFER'						
+						$this->table_field_payment_status        =>'WAITING TRANSFER',
+						$this->table_field_payment_session_id => $dataPayment['req_session_id']						
 						]);
 
 		        $hook->afterPayment(true,$dataPayment); 
@@ -412,7 +428,8 @@ class DokuController extends Controller {
 				DB::table($this->table_order)
 					->where($this->table_field_no_order,$this->invoice['trans_id'])
 					->update([
-						$this->table_field_payment_status        =>'FAILED'						
+						$this->table_field_payment_status        =>'FAILED',
+						$this->table_field_payment_session_id => $dataPayment['req_session_id']						
 						]);
 
 				$hook->afterPayment(false,$dataPayment); 
@@ -429,7 +446,7 @@ class DokuController extends Controller {
 		if($screet_code != config('dokularavel.NOTIFY_SCREET_CODE')) abort(404);
 
 		$allldata 		   = Request::all();
-		$trans_id          = Request::get('TRANSIDMERCHANT');
+		$trans_id          = urldecode(Request::get('TRANSIDMERCHANT'));
 		$status            = Request::get('RESULTMSG');	
 		$payment_date_time = Request::get('PAYMENTDATETIME');	
 		$approvalcode      = Request::get('APPROVALCODE');
@@ -469,13 +486,13 @@ class DokuController extends Controller {
 	}
 
 	public function checkStatus() {
-		$trans_id = Request::get('trans_id');
+		$trans_id = Request::get('trans_id'); 
 		if(!$trans_id) {
 			return redirect($this->redirect_url.'?status=failed');
 		}else{
 			$check = DB::table($this->table_order)->where($this->table_field_no_order,$trans_id)->where($this->table_field_payment_status,'PAID')->first();
 			if(!$check) {
-				return redirect($this->redirect_url.'?status=failed');	
+				return redirect($this->redirect_url.'?status=waiting_payment');	
 			}else{
 				return redirect($this->redirect_url.'?status=success');
 			}
