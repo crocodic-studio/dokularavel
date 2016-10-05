@@ -9,7 +9,7 @@ Ini adalah DOKU Payment Gateway Library yang sudah di *compile* menjadi *Package
 1. **SHARED_KEY** , didapat dari DOKU, silahkan hubungi [DOKU](http://doku.com)
 2. **MALL_ID**, didapat dari DOKU, silahkan hubungi [DOKU](http://doku.com)
 3. **PERMATA_CODE**, didapat dari DOKU, kode ini dibutuhkan jika opsi pembayaran Permata Bank diaktifkan
-4. **TABLE_ORDER**, table yang berkaitan Order/Invoice dan memilik field minimal **no_invoice,customer_name,customer_phone,customer_email,customer_address,total,payment_status,payment_date,payment_channel,payment_approval_code**
+4. **TABLE_ORDER**, table yang berkaitan Order/Invoice dan memilik field minimal **no_invoice,customer_name,customer_phone,customer_email,customer_address,total,payment_status,payment_date,payment_channel,payment_approval_code,payment_session_id**
 
 ## 1. Instalasi untuk Laravel 5.x
 ```
@@ -68,6 +68,7 @@ return [
 	'TABLE_FIELD_PAYMENT_STATUS'   => NULL,
 	'TABLE_FIELD_PAYMENT_CHANNEL'  => NULL,
 	'TABLE_FIELD_PAYMENT_APPROVAL_CODE' => NULL,
+	'TABLE_FIELD_PAYMENT_SESSION_ID' => NULL,
 
 
 	/*
