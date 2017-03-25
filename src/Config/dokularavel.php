@@ -22,6 +22,7 @@ return [
 	'MALL_ID'      => NULL,
 	'PERMATA_CODE' => NULL,
 	'CURRENCY'	   => 360,
+	'NOTIFY_SCREET_CODE'=>'123456',
 
 	/* 
 	| ---------------------------------------------------------
