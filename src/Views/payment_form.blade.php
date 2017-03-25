@@ -8,8 +8,8 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
-		<script src="http://staging.doku.com/doku-js/assets/js/doku.js?version=<?php echo time()?>"></script>
-		<link href="http://staging.doku.com/doku-js/assets/css/doku.css" rel="stylesheet">
+		<script src="{{$domain}}/doku-js/assets/js/doku.js?version=<?php echo time()?>"></script>
+		<link href="{{$domain}}/doku-js/assets/css/doku.css" rel="stylesheet">
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
 		<script type="text/javascript">
 		$(function() {
@@ -33,12 +33,21 @@
 				setInterval(function() {
 					$('img').each(function() {
 						var src = $(this).attr('src');
-						src = src.replace('http://luna2.nsiapay.com','http://staging.doku.com');
+						src = src.replace('http://luna2.nsiapay.com','{{$domain}}');
 						$(this).attr('src',src);
 					})
 				},2000);				
 			})
 		</script>
+
+		<style type="text/css">
+			.fancybox-outer {
+				overflow:auto;
+			     -webkit-overflow-scrolling:touch;
+			     width: 100%;
+			     height: 100%;
+			}
+		</style>
 	</head>
 	<body>			
 			<div doku-div='form-payment'></div>

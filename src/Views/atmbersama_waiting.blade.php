@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>DOKU Payment Finish</title>
+		<title>DOKU Payment Waiting</title>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<meta name="apple-mobile-web-app-capable" content="yes">
@@ -32,30 +32,29 @@
                     <div class="content-payment-channel padd-default">
                     <div id="creditcard" class="channel">
                     <!-- <div class="logo-payment-channel right-paychan cc"></div> -->                    
-                    @if(Request::get('status')=='failed')
-                    <ul>
-	                    <li>
-	                    	<div class='form-group'>
-	                    		<h3 style="color:#B7042C;" align="center">
-	                    			<div id='icon-tick' align="center"><img style="width:30%" src='{{ asset("public/vendor/dokularavel/stop.png") }}'/></div><br/>
-	                    			<span style="font-size:27px">Transaction Failed</span>
-	                    		</h3>
-	                    	</div>
-	                    </li>
-                    </ul>
 
-                    @else
-                    <ul>
-	                    <li>
-	                    	<div class='form-group'>
-	                    		<h3 style="color:#00af11;" align="center">
-	                    			<div id='icon-tick' align="center"><img style="width:50%" src='{{ asset("public/vendor/dokularavel/icon-tick.png") }}'/></div>
-	                    			<span style="font-size:27px">Transaction Success</span>
-	                    		</h3>
-	                    	</div>
-	                    </li>
-                    </ul>
-                    @endif    
+ 						<ul>
+		                    <li>
+		                    	<div class='form-group' align="center">
+		                    		<h3 style="color:#B7042C;">	                    			
+		                    			<span id='status' style="font-size:27px">Payment In Process...</span>
+		                    		</h3>
+		                    		<br/><p>If you have make a payment, please waiting for 4 ~ 6 minutes while Bank transfer process. We will notify to you if your payment has been received.</p>
+		                    		<form name="formRedirect" id="formRedirect" method="POST" action="{{Route('DokuController.checkStatus')}}">								   
+									<input type="hidden" name="trans_id" value="{{$doku_invoice}}">                                								
+									<input style="display:none" type="submit" class="default-btn font-reg" value="Check Status">
+									</form>
+		                    	</div>
+		                    </li>
+	                    </ul>
+	                    <script type="text/javascript">
+	                    $(function() {
+	                    	setInterval(function() {
+	                    		$('#formRedirect').submit();
+	                    	},10000);
+	                    })                    	
+	                    </script>
+   
 
                     </div>
                     </div>

@@ -1,6 +1,15 @@
 <?php 
 
 return [
+	/*
+	| ---------------------------------------------------------
+	| Setting the payment mode is Sandbox Mode or Live Mode
+	| ---------------------------------------------------------
+	| if set false it means sandbox mode, else it means live mode 
+	| ** PLEASE BE CAREFULL ABOUT CHANGE THE LIVE MODE
+	|
+	*/
+	'LIVE_MODE' => FALSE,
 	
 	/*
 	| ---------------------------------------------------------
@@ -11,6 +20,7 @@ return [
 	'PAYMENT_PATH' => 'dokularavel',
 	'SHARED_KEY'   => NULL, 
 	'MALL_ID'      => NULL,
+	'PERMATA_CODE' => NULL,
 	'CURRENCY'	   => 360,
 
 	/* 
@@ -26,6 +36,10 @@ return [
 	'TABLE_FIELD_CUSTOMER_PHONE'   => NULL,
 	'TABLE_FIELD_CUSTOMER_EMAIL'   => NULL,
 	'TABLE_FIELD_CUSTOMER_ADDRESS' => NULL,
+	'TABLE_FIELD_PAYMENT_DATE'     => NULL,
+	'TABLE_FIELD_PAYMENT_STATUS'   => NULL,
+	'TABLE_FIELD_PAYMENT_CHANNEL'  => NULL,
+	'TABLE_FIELD_PAYMENT_APPROVAL_CODE' => NULL,
 
 
 	/*
@@ -35,12 +49,11 @@ return [
 	| 15 = Credit Card
 	| 04 = Doku Wallet
 	| 02 = Mandiri Clickpay
-	| 05 = Permata VA Lite	
-	| 14 = ALFA
+	| 05 = Permata Bank / ATM Bersama	
 	|
 	| This setting is for default payment channel otherwise you can set the payment channel on the fly by url parameter "payment_channel"
 	*/	
-	'AVAILABLE_PAYMENT_CHANNEL'=> ['15','04','02','05','14'],
+	'AVAILABLE_PAYMENT_CHANNEL'=> ['15','04','02','05'],
 	'DEFAULT_PAYMENT_CHANNEL'=> '15', 			
 
 

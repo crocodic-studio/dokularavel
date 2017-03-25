@@ -8,8 +8,8 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
-		<script src="http://staging.doku.com/doku-js/assets/js/doku.js?version=<?php echo time()?>"></script>
-		<link href="http://staging.doku.com/doku-js/assets/css/doku.css" rel="stylesheet">
+		<script src="{{$domain}}/doku-js/assets/js/doku.js?version=<?php echo time()?>"></script>
+		<link href="{{$domain}}/doku-js/assets/css/doku.css" rel="stylesheet">
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
 		
 		<script type="text/javascript">
@@ -67,10 +67,10 @@
 
 			    <div class="head padd-default"><!-- start head -->
 			        <div class="left-head fleft">
-			            <img src="http://staging.doku.com/doku-js/assets/images/logo-merchant.png" alt="" />
+			            <img src="https://staging.doku.com/doku-js/assets/images/logo-merchant1.png" alt="" />
 			        </div>
-			        <div class="right-head fright">
-			            <div class="text-totalpay color-two">Total Payment ( IDR )</div>
+			        <div class="right-head fright" style="text-align:right">
+			            <div class="text-totalpay color-two">ID Invoice : {{$invoice}}, Total Payment ( IDR )</div>
 			            <div class="amount color-one">{{ number_format($amount) }}</div>
 			        </div>
 			        <div class="clear"></div>
@@ -86,8 +86,8 @@
 			            <div class="logo-payment-channel right-paychan mandiriclickpay"></div>
 
 			            <div class="styled-input">
-			                <input type="text" id="cc_number" name="cc_number" class="cc-number" required />
-			                <label>mandiri debit card number</label>
+			                <input type="text" id="cc_number" name="cc_number" class="cc-number" required style="border:1px solid red" />
+			                <label style="color: #d10000">Enter Card Number Here...</label>
 			            </div>
 			            <div class="desc">
 			                Pastikan bahwa kartu Anda telah diaktivasi melalui layanan mandiri Internet Banking Bank Mandiri pada menu Authorized Payment agar dapat melakukan transaksi Internet Payment.
@@ -109,8 +109,8 @@
 			                    </li>
 			                    <li>
 			                        <div class="text-chacode">Challenge Code 2</div>
-			                        <div class="num-chacode">0000100000</div>
-			                        <input type="hidden" name="CHALLENGE_CODE_2" value="0000100000"/>
+			                        <div class="num-chacode">{{ str_replace('.00','',$amount) }}</div>
+			                        <input type="hidden" name="CHALLENGE_CODE_2" value="{{ str_replace('.00','',$amount) }}"/> 
 			                        <div class="clear"></div>
 			                    </li>
 			                    <li>
@@ -128,7 +128,7 @@
 			                    <label>Token Response</label>
 			                </div>
 			                <div class="clear"></div>
-								<span title="Explenation Text" class="tooltip tolltips-wallet">
+								<span title="Enter token code that generated here" class="tooltip tolltips-wallet">
 									   <span title="More"><img src="http://staging.doku.com/doku-js/assets/images/icon-help.png" alt="" style="margin: 0 0 0 10px;" /></span>
 								</span>
 			            </div>
@@ -140,7 +140,10 @@
 
 			</section><!-- end content -->
 
-
+			<div class="footer">
+            	<img src="http://staging.doku.com/doku-js/assets/images/secure.png" alt="">
+            	<div class="">Copyright DOKU {{ date('Y') }}</div>
+            </div>
 			
 	</body>
 </html>
