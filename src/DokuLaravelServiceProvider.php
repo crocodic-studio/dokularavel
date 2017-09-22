@@ -29,10 +29,8 @@ class DokuLaravelServiceProvider extends ServiceProvider
      * @return void
      */
     public function register()
-    {                                 
-
-        $this->app['dokularavel'] = $this->app->share(function ()
-        {
+    {
+        $this->app->singleton('dokularavel', function () {
             return true;
         });
     }
