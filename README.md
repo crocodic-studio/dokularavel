@@ -171,3 +171,6 @@ Adapun jenis - jenis pembayaran yang tersedia saat ini di DOKU dan yang terinteg
 ## Studi Kasus Penggunaan
 1. Mobile Apps, Bagi anda yang membutuhkan dalam penggunaan Aplikasi Mobile, anda tinggal membuat **WebView** dan memasukkan URL DokuLaravel diatas
 2. Website, Bagi anda yang membutuhkan dalam penggunaan Website, anda tinggal memberikan **link** dan diarahkan ke URL DokuLaravel diatas
+
+## Mengenai Doku - http://doku.com
+Berdiri sejak tahun 2007, DOKU yang sebelumnya bernama PT. Nusa Satu Inti Artha dikenal sebagai perusahaan penyedia layanan pembayaran elektronik dan manajemen resiko pertama di Indonesia. Dengan semangat kerja keras dan totalitas dalam mendukung kebutuhan bisnis online para merchant, DOKU semakin dipercaya dan menjadi layanan pembayaran elektronik pilihan bagi merchant nasional maupun internasional.
